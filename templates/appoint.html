@@ -1,0 +1,187 @@
+{% load static %}
+<link
+      href="{% static 'css/style.css'%}"
+      rel="stylesheet"
+    />
+<div class="row justify-content-center bg-appointment mx-0">
+    <div class="col-lg-6 py-5">
+      <div class="p-5 my-5" style="background: rgba(33, 30, 28, 0.7)">
+        <h1 class="text-white text-center mb-4">Make Appointment</h1>
+        <form action="{% url 'appointments' %}" method="POST">
+          <div class="form-row">
+            <div class="col-sm-6">
+              <div class="form-group">
+                <input
+                  type="text"
+                  name="name"
+                  class="form-control bg-transparent p-4"
+                  placeholder="Your Name"
+                  required="required"
+                />
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group">
+                <input
+                  name="email"
+                  type="email"
+                  class="form-control bg-transparent p-4"
+                  placeholder="Your Email"
+                  required="required"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="col-sm-6">
+              <div class="form-group">
+                <div class="date" id="date" data-target-input="nearest">
+                  <input
+                    type="text"
+                    name="date"
+                    class="form-control bg-transparent p-4 datetimepicker-input"
+                    placeholder="Select Date"
+                    data-target="#date"
+                    data-toggle="datetimepicker"
+                    required="required"
+                  />
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group">
+                <div class="time" id="time" data-target-input="nearest">
+                  <input
+                    type="text"
+                    name="time"
+                    class="form-control bg-transparent p-4 datetimepicker-input"
+                    placeholder="Select Time"
+                    data-target="#time"
+                    data-toggle="datetimepicker"
+                    required="required"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="col-sm-12">
+              <div class="form-group">
+                <select
+                  id="services"
+                  name="service"
+                  class="custom-select bg-transparent px-4"
+                  style="height: 47px"
+                  onchange="pricing()"
+                  required="required"
+                >
+                  <option value="">Select A Service</option>
+                  <option>Body Massage <span></span></option>
+                  <option>Body Massage (Exclusive)</option>
+                  <option>Stone Therapy</option>
+                  <option>Skin Care</option>
+                  <option>Face Masking</option>
+                </select>
+              </div>
+            </div>
+            
+          </div>
+          <div class="form-row">
+            <div class="col-sm-6">
+              <div class="form-group">
+                <select
+                  name="payment"
+                  class="custom-select bg-transparent px-4"
+                  style="height: 47px"
+                  required="required"
+                >
+                  <option selected value="">Select A Payment Method</option>
+                  <option>CashApp</option>
+                  <option>PayPal</option>
+                  <option>Bitcoins</option>
+                  <option>Zelle</option>
+                  <option>Venmo</option>
+                  <option>ApplePay</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-sm-6" id="price_html">
+              <div class="form-group">
+                <select
+                  id="service_type"
+                  name="service_type"
+                  class="custom-select bg-transparent px-4"
+                  style="height: 47px"
+                  required="required"
+                  onchange="pricing()"
+                >
+                  <option selected value="">Select A service Type</option>
+
+                  <option>In Call(I Host You)</option>
+                  <option>OutCall (You Host)</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="form-row" id="address" style="display: none">
+            <div class="col-sm-12">
+              <div class="form-group">
+                <input
+                  type="text"
+                  name="address"
+                  class="form-control bg-transparent p-4"
+                  placeholder="Enter Address"
+                />
+              </div>
+              <div class="form-group">
+                <input
+                  type="text"
+                  name="phone_number"
+                  class="form-control bg-transparent p-4"
+                  placeholder="Enter Phone Number"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="col-sm-12">
+              <div class="form-group">
+                <select
+                  id="how_long"
+                  name="how_long"
+                  class="custom-select bg-transparent px-4"
+                  style="height: 47px"
+                  required="required"
+                  onchange="pricing()"
+                >
+                  <option selected value="">Select How Long</option>
+                  <option>Half Hour</option>
+                  <option>45 Mins</option>
+                  <option>1 Hour</option>
+                  <option>3 - 6 Hours</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <p id="pricing"></p>
+          <input id="price" type="text" name="price" style="display: none" />
+          <button
+            class="btn btn-primary btn-block"
+            type="submit"
+            style="height: 47px"
+          >
+            Make Appointment
+          </button>
+        </form>
+        <div class="mt-3 text-center">
+
+            <div class="spinner-border" style="width: 5rem; height: 5rem;  animation-duration: 2s;" role="status">
+                <span class="sr-only">Loading...</span>
+              </div>
+          
+        </div>
+      </div>
+      
+    </div>
+    
+  </div>
