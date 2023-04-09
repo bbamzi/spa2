@@ -1,7 +1,7 @@
 from django.db import models
 
 # Create your models here.
-class Members(models.Model):
+class Bookings(models.Model):
     name =  models.CharField(max_length=100, blank=True, null=True)
     email =  models.CharField(max_length=100, blank=True, null=True)
     date =  models.CharField(max_length=100, blank=True, null=True)
@@ -11,6 +11,7 @@ class Members(models.Model):
     service_type =  models.CharField(max_length=100, blank=True, null=True)
     durations =  models.CharField(max_length=100, blank=True, null=True)
     receipt =  models.CharField(max_length=100, blank=True, null=True)
+    
 
 
     def __str__(self) -> str:
