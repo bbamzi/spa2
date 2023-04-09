@@ -206,18 +206,15 @@
        
    
         </div>
-        <div class="text-center mt-3" id="upload_btn" style="display: none;" >
-        <label for="paid">
-          <input
-          id="paid"
-          class="btn btn-primary btn-block"
-          type="file"
-          style="height: 47px "
-          value="I have Paid"
-        
-        >
-        </label>
-         
+        <div class="text-center mt-3" id="upload_btn" style="display: none;">
+          <input style="display:none" type="file" id="my-file">
+            <button type="button" 
+            onclick="document.getElementById('my-file').click()"
+            class="btn btn-primary btn-block"
+            id="appointment_btn"
+            >
+            Upload Receipt
+          </button>
         </div>
       </div>
       

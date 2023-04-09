@@ -1,0 +1,8 @@
+/venv
+venv
+migrations
+/migrations
+*__pycache__*
+/*__pycache__*
+app/__pycache__/views.cpython-310.pyc
+.pyc

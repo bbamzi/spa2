@@ -16,8 +16,9 @@ def appointments(request):
      payment_method = request.GET.get('payment_method', None)
      service_type = request.GET.get('service_type', None)
      durations = request.GET.get('durations', None)
-     resp = {"success": "sdsdsd"}
-     return JsonResponse(resp, safe=False)
+     receipt = request.GET.get('receipt', None)
+     
+     return JsonResponse({"Wewe":"wewe"}, safe=False)
 
      
 
