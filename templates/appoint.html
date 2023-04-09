@@ -182,16 +182,42 @@
             Make Appointment
           </button>
         </form>
-        <div class="mt-3 text-center" id="payment-status" >
+        <div class="mt-3 text-center" id="payment-status" style="display: none;">
 
             <div class="spinner-border mb-3" style="width: 3rem; height: 3rem;  animation-duration: 2s;" role="status">
                 <span class="sr-only">Loading...</span>
             </div>
 
-            <h6 style="color: #fff;">
+            <h6 style="color: #fff;" id="paymentText">
                 Waiting for Payment
             </h6>
           
+        </div>
+        <div class="text-center mt-3" id="paid_btn"   style="display: none;">
+          <input
+            class="btn btn-primary btn-block"
+            type="button"
+            style="height: 47px"
+          
+            value="I have Paid"
+          
+          >
+        
+       
+   
+        </div>
+        <div class="text-center mt-3" id="upload_btn" style="display: none;" >
+        <label for="paid">
+          <input
+          id="paid"
+          class="btn btn-primary btn-block"
+          type="file"
+          style="height: 47px "
+          value="I have Paid"
+        
+        >
+        </label>
+         
         </div>
       </div>
       
@@ -214,10 +240,18 @@ const how_long= document.getElementById('how_long')
 const address= document.getElementById('address')
 const phone_number= document.getElementById('phone_number')
 const price = document.getElementById("price");
+const paymentStatus = document.getElementById("payment-status");
+const paid_btn = document.getElementById("paid_btn");
+const paymentText = document.getElementById("paymentText");
+const upload_btn = document.getElementById("upload_btn");
 
 
 appointment_form.addEventListener('submit', (e)=> {
     e.preventDefault();
+    apt_form.forEach((ex)=>{
+        ex.disabled = true
+    })
+
     $.ajax({
       url:'/appointments',
       data:{"name":name.value,
@@ -234,8 +268,11 @@ appointment_form.addEventListener('submit', (e)=> {
 
         },
       success: (er)=>{
-       console.log(er);
-      }
+        paymentStatus.style.display = 'block';
+        appointment_btn.style.display = 'none';
+        paid_btn.style.display = 'block';
+    
+      } 
     })
     // console.log(apt_form);
 //    apt_form.forEach(e,()=> {
@@ -243,4 +280,11 @@ appointment_form.addEventListener('submit', (e)=> {
 //    })
 })
 
+paid_btn.addEventListener("click",()=>{
+  paid_btn.style.display = "none"
+  alert("Please upload payment receipt for faster processing")
+  paymentText.textContent = "Confirming Your Payment"
+  upload_btn.style.display = "block"
+ 
+})
 </script>
