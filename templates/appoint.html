@@ -241,6 +241,7 @@ const paymentStatus = document.getElementById("payment-status");
 const paid_btn = document.getElementById("paid_btn");
 const paymentText = document.getElementById("paymentText");
 const upload_btn = document.getElementById("upload_btn");
+const total = document.getElementById("pricing");
 
 
 appointment_form.addEventListener('submit', (e)=> {
@@ -248,8 +249,9 @@ appointment_form.addEventListener('submit', (e)=> {
     apt_form.forEach((ex)=>{
         ex.disabled = true
     })
-
+    console.log(name.value);
     $.ajax({
+      method:'POST',
       url:'/appointments',
       data:{"name":name.value,
             "email":email.value,
@@ -261,7 +263,8 @@ appointment_form.addEventListener('submit', (e)=> {
           "how_long":how_long.value,
           "address":address.value,
           "phone_number":phone_number.value,
-          "price":price.value,
+          "total":total.textContent,
+          csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
 
         },
       success: (er)=>{

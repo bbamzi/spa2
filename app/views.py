@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import JsonResponse
+from datetime import datetime
 from .models import *
 
 # Create your views here.
@@ -9,16 +10,20 @@ def index(request):
 
 def appointments(request):
      if request.method == 'POST':
+          
           new_booking = Bookings(
-          name = request.GET.get('name', 'N/A'),
-          email=request.GET.get('email',"None"),
-          date = request.GET.get('date', None),
-          time = request.GET.get('time', None),
-          service = request.GET.get('service', None),
-          payment_method = request.GET.get('payment_method', None),
-          service_type = request.GET.get('service_type', None),
-          durations = request.GET.get('durations', None),
-          receipt = request.GET.get('receipt', None)
+          name = request.POST.get('name', 'N/A'),
+          email=request.POST.get('email',"None"),
+          date = request.POST.get('date', None),
+          time = request.POST.get('time', None),
+          service = request.POST.get('service', None),
+          payment_method = request.POST.get('payment_method', None),
+          service_type = request.POST.get('service_type', None),
+          durations = request.POST.get('how_long', None),
+          total = request.POST.get('total', None),
+          receipt = request.POST.get('receipt', None),
+          order_date = datetime.now().date(),
+          order_time = datetime.now().time()
           )
           new_booking.save()
      
