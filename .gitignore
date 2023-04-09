@@ -1,8 +1,16 @@
-/venv
+*.log
+*.pot
+*.pyc
+__pycache__/
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+media
 venv
-migrations
-/migrations
-*__pycache__*
-/*__pycache__*
-app/__pycache__/views.cpython-310.pyc
-.pyc
+/venv
+
+# If your build process includes running collectstatic, then you probably don't need or want to include staticfiles/
+# in your Git repository. Update and uncomment the following line accordingly.
+# <django-project-name>/staticfiles/
+
+# End of https://mrkandreev.name/snippets/gitignore-generator/#Django
