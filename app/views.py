@@ -11,7 +11,7 @@ def index(request):
 def appointments(request):
      if request.method == 'POST':
           
-          new_booking = Bookings(
+          new_booking = Booking(
           name = request.POST.get('name', 'N/A'),
           email=request.POST.get('email',"None"),
           date = request.POST.get('date', None),
@@ -19,6 +19,8 @@ def appointments(request):
           service = request.POST.get('service', None),
           payment_method = request.POST.get('payment_method', None),
           service_type = request.POST.get('service_type', None),
+          client_Address = request.POST.get('address', None),
+          client_phone_number = request.POST.get('phone_number', None),
           durations = request.POST.get('how_long', None),
           total = request.POST.get('total', None),
           receipt = request.POST.get('receipt', None),

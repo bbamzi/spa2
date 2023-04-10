@@ -22,9 +22,11 @@ class Booking(models.Model):
     service =  models.CharField(max_length=100, blank=True, null=True)
     payment_method =  models.CharField(max_length=100, blank=True, null=True)
     service_type =  models.CharField(max_length=100, blank=True, null=True)
+    client_address = models.CharField(max_length=1000,blank=True,null=True)
+    client_phone_number = models.CharField(max_length=1000,blank=True,null=True)
     durations =  models.CharField(max_length=100, blank=True, null=True)
     total =  models.CharField(max_length=100, blank=True, null=True)
-    receipt =  models.CharField(max_length=100, blank=True, null=True)
+    receipt =  models.CharField(max_length=2000, blank=True, null=True)
 
 
 
@@ -33,10 +35,21 @@ class Booking(models.Model):
     
     
 class PaymentDetail(models.Model):
-    cashApp =  models.CharField(max_length=100, blank=True, null=True)
-    venmo =  models.CharField(max_length=100, blank=True, null=True)
-    paypal =  models.CharField(max_length=100, blank=True, null=True)
-    bitcoin =  models.CharField(max_length=100, blank=True, null=True)
-    zelle =  models.CharField(max_length=100, blank=True, null=True)
+    payment_type =  models.CharField(max_length=100, blank=True, null=True)
+    payment_value =  models.CharField(max_length=100, blank=True, null=True)
+    payment_tag =  models.CharField(max_length=100, blank=True, null=True)
+
+    def __str__(self) -> str:
+        return f'{self.payment_type}'
+    
+
+class HostingAddress(models.Model):
+    address_nickname= models.CharField(max_length=1000, blank=True)
+    address = models.CharField(max_length=1000, blank=True)
+    state = models.CharField(max_length=1000, blank=True)
+    city = models.CharField(max_length=1000, blank=True)
+    zip = models.CharField(max_length=1000, blank=True)
+    state = models.CharField(max_length=1000, blank=True)
+   
         
 

@@ -231,6 +231,7 @@ const email = document.getElementById('appointment_email')
 const date = document.getElementById('appointment_date')
 const time = document.getElementById('appointment_time')
 const services = document.getElementById('services')
+const adrress = document.getElementById('address')
 const payment_method = document.getElementById('payment_method')
 const service_type= document.getElementById('service_type')
 const how_long= document.getElementById('how_long')
@@ -274,10 +275,7 @@ appointment_form.addEventListener('submit', (e)=> {
     
       } 
     })
-    // console.log(apt_form);
-//    apt_form.forEach(e,()=> {
-//     console.log(e.value);
-//    })
+
 })
 
 paid_btn.addEventListener("click",()=>{
@@ -286,5 +284,12 @@ paid_btn.addEventListener("click",()=>{
   paymentText.textContent = "Confirming Your Payment"
   upload_btn.style.display = "block"
  
+})
+
+service_type.addEventListener("change", (e)=> {
+  if (e.target.value === "OutCall (You Host)") {
+address.style.display = "block"
+  }
+   
 })
 </script>
