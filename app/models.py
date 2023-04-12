@@ -12,7 +12,7 @@ def id_gen() -> str:
     return int_to_base36(uuid.uuid4().int)[:ID_LENGTH]
 
 class Booking(models.Model):
-    order_id = models.CharField(max_length=ID_LENGTH, unique = True , default=id_gen, editable=False)
+    order_id =  models.CharField(max_length=100, blank=True, null=True)
     order_date = models.DateField(auto_now_add=True)
     order_time =models.TimeField(auto_now=False, auto_now_add=False)
     name =  models.CharField(max_length=100, blank=True, null=True)

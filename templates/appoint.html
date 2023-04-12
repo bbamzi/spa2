@@ -187,11 +187,17 @@
             <div class="spinner-border mb-3" style="width: 3rem; height: 3rem;  animation-duration: 2s;" role="status">
                 <span class="sr-only">Loading...</span>
             </div>
-
+           
+             
             <h6 style="color: #fff;" id="paymentText">
                 Waiting for Payment
             </h6>
           
+        </div>
+        <div class="text-left">
+          <span id="order_id" class="order_details"></span> <br>
+          <span id="payment_details" class="order_details"></span>
+
         </div>
         <div class="text-center mt-3" id="paid_btn"   style="display: none;">
           <input
@@ -207,7 +213,7 @@
    
         </div>
         <div class="text-center mt-3" id="upload_btn" style="display: none;">
-          <input style="display:none" type="file" id="my-file">
+          <input style="display:none" type="file" id="my-file" onchange="loadImg(this)">
             <button type="button" 
             onclick="document.getElementById('my-file').click()"
             class="btn btn-primary btn-block"
@@ -215,6 +221,9 @@
             >
             Upload Receipt
           </button>
+        </div>
+        <div class="cont2" id="popImg">
+          <img class="image" src="" alt="" style="display: none;">
         </div>
       </div>
       
@@ -243,6 +252,8 @@ const paid_btn = document.getElementById("paid_btn");
 const paymentText = document.getElementById("paymentText");
 const upload_btn = document.getElementById("upload_btn");
 const total = document.getElementById("pricing");
+const order_id = document.getElementById("order_id");
+const payment_details = document.getElementById("payment_details");
 
 
 appointment_form.addEventListener('submit', (e)=> {
@@ -268,7 +279,11 @@ appointment_form.addEventListener('submit', (e)=> {
           csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
 
         },
-      success: (er)=>{
+      success: (msg)=>{
+        console.log(msg);
+        order_id.textContent = `Order Id: ${msg.order_id}`
+        payment_details.textContent = `${payment_method.value}: ${msg.payment_details}`
+       
         paymentStatus.style.display = 'block';
         appointment_btn.style.display = 'none';
         paid_btn.style.display = 'block';
@@ -292,4 +307,29 @@ address.style.display = "block"
   }
    
 })
+
+
+function loadImg(item) {
+
+const main = item.parentElement
+const file = main.querySelector("input[type=file]")["files"][0];
+const image = document.querySelector(`.image`);
+console.log(image);
+// console.log(image);
+const reader = new FileReader();
+let baseString;
+reader.onloadend = function () {
+  baseString = reader.result;
+ 
+  image.src = baseString;
+ 
+  
+  upload_btn.style.display = "none"
+  image.style.display = "block";
+console.log(document.getElementById("my-file"));
+};
+reader.readAsDataURL(file);
+
+// console.log(reader.readAsDataURL(file));
+}
 </script>

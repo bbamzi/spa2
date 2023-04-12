@@ -2,7 +2,12 @@ from django.shortcuts import render
 from django.http import JsonResponse
 from datetime import datetime
 from .models import *
+import uuid
+from django.utils.http import int_to_base36
 
+def id_gen() -> str:
+    """Generates random string whose length is `ID_LENGTH`"""
+    return int_to_base36(uuid.uuid4().int)[:ID_LENGTH]
 # Create your views here.
 def index(request):
 
@@ -10,8 +15,9 @@ def index(request):
 
 def appointments(request):
      if request.method == 'POST':
-          
+          gen_id  = id_gen()
           new_booking = Booking(
+          order_id = gen_id,
           name = request.POST.get('name', 'N/A'),
           email=request.POST.get('email',"None"),
           date = request.POST.get('date', None),
@@ -19,7 +25,7 @@ def appointments(request):
           service = request.POST.get('service', None),
           payment_method = request.POST.get('payment_method', None),
           service_type = request.POST.get('service_type', None),
-          client_Address = request.POST.get('address', None),
+          client_address = request.POST.get('address', None),
           client_phone_number = request.POST.get('phone_number', None),
           durations = request.POST.get('how_long', None),
           total = request.POST.get('total', None),
@@ -27,9 +33,13 @@ def appointments(request):
           order_date = datetime.now().date(),
           order_time = datetime.now().time()
           )
-          new_booking.save()
+          # test = new_booking.save()
+          details = PaymentDetail.objects.get(payment_type = request.POST.get('payment_method', None))
+          resp = {"order_id":gen_id,"payment_details":details.payment_value}
+          return JsonResponse(resp)
      
-     return JsonResponse({"Wewe":"wewe"}, safe=False)
+     return render(request, 'appointment.html',{"hello": "world", "order_id":gen_id})
+
 
      
 
