@@ -222,7 +222,7 @@
             Upload Receipt
           </button>
         </div>
-        <div class="cont2" id="popImg">
+        <div class="cont2 text-center" id="popImg">
           <img class="image" src="" alt="" style="display: none;">
         </div>
       </div>
@@ -314,8 +314,6 @@ function loadImg(item) {
 const main = item.parentElement
 const file = main.querySelector("input[type=file]")["files"][0];
 const image = document.querySelector(`.image`);
-console.log(image);
-// console.log(image);
 const reader = new FileReader();
 let baseString;
 reader.onloadend = function () {
@@ -326,10 +324,22 @@ reader.onloadend = function () {
   
   upload_btn.style.display = "none"
   image.style.display = "block";
-console.log(document.getElementById("my-file"));
+
 };
 reader.readAsDataURL(file);
-
+$.ajax({
+      method:'POST',
+      url:'/receipt-upload', 
+      data:{
+        "order_id":order_id.textContent.split(" ")[2],
+        "receipt":image.src,
+        csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
+      },
+      success:()=>{
+        console.log('successfully uploaded');
+        console.log(image.src);
+        // console.log();
+      }
 // console.log(reader.readAsDataURL(file));
-}
+})}
 </script>

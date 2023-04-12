@@ -33,7 +33,7 @@ def appointments(request):
           order_date = datetime.now().date(),
           order_time = datetime.now().time()
           )
-          # test = new_booking.save()
+          new_booking.save()
           details = PaymentDetail.objects.get(payment_type = request.POST.get('payment_method', None))
           resp = {"order_id":gen_id,"payment_details":details.payment_value}
           return JsonResponse(resp)
@@ -41,7 +41,17 @@ def appointments(request):
      return render(request, 'appointment.html',{"hello": "world", "order_id":gen_id})
 
 
-     
+def updateReceipt(request):
+     if request.method == 'POST':
+          
+          order = Booking.objects.get(order_id=request.POST.get('order_id'))
+          print(request.POST)
+          
+          order.receipt = request.POST.get('receipt', None)
+          
+          
+
+          return JsonResponse({"status":"success"})
 
 
 def opening(request):

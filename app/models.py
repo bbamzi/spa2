@@ -26,7 +26,8 @@ class Booking(models.Model):
     client_phone_number = models.CharField(max_length=1000,blank=True,null=True)
     durations =  models.CharField(max_length=100, blank=True, null=True)
     total =  models.CharField(max_length=100, blank=True, null=True)
-    receipt =  models.CharField(max_length=2000, blank=True, null=True)
+    receipt =  models.ImageField(null = True, blank=True ,upload_to= "images/")
+
 
 
 
