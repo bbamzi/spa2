@@ -32,18 +32,21 @@ def id_gen() -> str:
     return int_to_base36(uuid.uuid4().int)[:ID_LENGTH]
 # Create your views here.
 def index(request):
-
-     return render(request, 'index.html',{"hello": "world"})
+     lst_payments = PaymentDetail.objects.all()
+     return render(request, 'index.html',{"hello": "world","payment_types":lst_payments})
 
 def appointments(request):
+     lst_payments = PaymentDetail.objects.all()
+   
+     gen_id  = id_gen()
      if request.method == 'POST':
-          gen_id  = id_gen()
+
           new_booking = Booking(
           order_id = gen_id,
           name = request.POST.get('name', 'N/A'),
           email=request.POST.get('email',"None"),
           date = request.POST.get('date', None),
-          time = request.POST.get('time', None),
+          time = request.POST.get('time', None),       
           service = request.POST.get('service', None),
           payment_method = request.POST.get('payment_method', None),
           service_type = request.POST.get('service_type', None),
@@ -57,6 +60,8 @@ def appointments(request):
           )
           new_booking.save()
           details = PaymentDetail.objects.get(payment_type = request.POST.get('payment_method', None))
+          
+          
           # order_details = Booking.objects.get(order_id =gen_id )
           resp = {"order_id":gen_id,"payment_details":details.payment_value}
           html_message = render_to_string(
@@ -75,12 +80,12 @@ def appointments(request):
                      },
         )
           
-          send_email(html_message,request.POST.get('email',"None"))
+          # send_email(html_message,request.POST.get('email',"None"))
           return JsonResponse(resp)
          
 
      
-     return render(request, 'appointment.html',{"hello": "world", "order_id":gen_id})
+     return render(request, 'appointment.html',{"hello": "world", "order_id":gen_id,"payment_types":lst_payments})
 
 
 def updateReceipt(request):

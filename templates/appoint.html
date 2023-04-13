@@ -3,6 +3,7 @@
       href="{% static 'css/style.css'%}"
       rel="stylesheet"
     />
+    <p>{{payment_types.payment_type}}</p>
 <div class="row justify-content-center bg-appointment mx-0">
     <div class="col-lg-6 py-5">
       <div class="p-5 my-5" style="background: rgba(33, 30, 28, 0.7)">
@@ -102,14 +103,12 @@
                   id="payment_method"
                 >
                   <option selected value="">Select A Payment Method</option>
-                  <option>CashApp</option>
-                  <option>PayPal</option>
-                  <option>Bitcoins</option>
-                  <option>Zelle</option>
-                  <option>Venmo</option>
-                  <option>ApplePay</option>
+                  {% for data in payment_types %}
+                  <option>{{data}}</option>
+                  {% endfor %}
                 </select>
               </div>
+
             </div>
             <div class="col-sm-6" id="price_html">
               <div class="form-group">
