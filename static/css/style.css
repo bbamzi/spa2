@@ -9735,25 +9735,3 @@ h6,
   margin-bottom: 0px;
 } */
 
-#popImg {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  width: 200px;
-  height: 200px;
-}
-img {
-  position: absolute;
-}
-#closebutton {
-  right: 0;
-  top: 0;
-  z-index: 2;
-  cursor: pointer;
-}
-#roomchoose {
-  width: 100%;
-  height: auto;
-  z-index: 1;
-}
