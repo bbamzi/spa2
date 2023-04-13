@@ -4,6 +4,10 @@ from datetime import datetime
 from .models import *
 import uuid
 from django.utils.http import int_to_base36
+from django.core.files.storage import FileSystemStorage
+from django.core.files.base import ContentFile
+import base64
+import os
 
 def id_gen() -> str:
     """Generates random string whose length is `ID_LENGTH`"""
@@ -44,12 +48,18 @@ def appointments(request):
 def updateReceipt(request):
      if request.method == 'POST':
           
-          order = Booking.objects.get(order_id=request.POST.get('order_id'))
-          print(request.POST)
-          
-          order.receipt = request.POST.get('receipt', None)
-          
-          
+          id = request.POST.get('order_id', None)
+          order = Booking.objects.get(order_id=id)
+          file = request.FILES.get('file')
+        
+          extension = os.path.splitext(str(request.FILES.get('file')))[1]
+        
+          fss = FileSystemStorage()
+          filename = fss.save(f'{id}.{extension}', file)
+          url = fss.url(filename)
+          order.receipt = url
+          order.save()
+                    
 
           return JsonResponse({"status":"success"})
 

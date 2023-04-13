@@ -313,6 +313,7 @@ function loadImg(item) {
 
 const main = item.parentElement
 const file = main.querySelector("input[type=file]")["files"][0];
+console.log(file);
 const image = document.querySelector(`.image`);
 const reader = new FileReader();
 let baseString;
@@ -327,19 +328,21 @@ reader.onloadend = function () {
 
 };
 reader.readAsDataURL(file);
+var data = new FormData();
+            data.append("file", $("input[id^='my-file']")[0].files[0]);
+            data.append("csrfmiddlewaretoken", "{{ csrf_token }}");
+            data.append("order_id",order_id.textContent.split(" ")[2]);
+          
 $.ajax({
-      method:'POST',
-      url:'/receipt-upload', 
-      data:{
-        "order_id":order_id.textContent.split(" ")[2],
-        "receipt":image.src,
-        csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
-      },
-      success:()=>{
-        console.log('successfully uploaded');
-        console.log(image.src);
-        // console.log();
-      }
-// console.log(reader.readAsDataURL(file));
-})}
+                method: "POST",
+                url: "/receipt-upload",
+                processData: false,
+                contentType: false,
+                mimeType: "multipart/form-data",
+                data: data,
+                success: function(res) {
+                    console.log(res)
+                }
+            })
+}
 </script>
