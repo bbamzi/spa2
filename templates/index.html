@@ -43,11 +43,7 @@
               afternoon with friends thanks to the serene lounge area, where you
               can hang out between treatments."
             </p>
-            <a
-              class="btn btn-outline-light py-3 px-4 mt-3 animate__animated animate__fadeInUp"
-              href="{% url 'appointments' %}"
-              >Make Appointment</a
-            >
+           
           </div>
         </div>
       </div>
@@ -79,11 +75,8 @@
               passionate about skincare, and we only use premium products that
               are safe and highly effective.
             </p>
-            <a
-              class="btn btn-outline-light py-3 px-4 mt-3 animate__animated animate__fadeInUp"
-              href="#"
-              >Make Appointment</a
-            >
+            
+            
           </div>
         </div>
       </div>
@@ -117,11 +110,7 @@
               chronic pain. The penetrating effects of the heated stones allows
               the massage to be delivered without excessive pressure.
             </p>
-            <a
-              class="btn btn-outline-light py-3 px-4 mt-3 animate__animated animate__fadeInUp"
-              href="{% url 'appointments' %}"
-              >Make Appointment</a
-            >
+            
           </div>
         </div>
       </div>
@@ -297,11 +286,7 @@
           services along with great results. We’re passionate about skincare,
           and we only use premium products that are safe and highly effective.
         </p>
-        <div class="w-100 bg-white text-center p-4">
-          <a class="btn btn-primary" href="{{url_for('appointments'%}"
-            >Make Order</a
-          >
-        </div>
+        
       </div>
     </div>
   </div>
@@ -347,9 +332,7 @@
             </li>
            
           </ul>
-          <a href="{{url_for('appointments'%}" class="btn btn-primary mt-2"
-            >Book Now</a
-          >
+          
         </div>
       </div>
     </div>
@@ -375,58 +358,28 @@
         </h6>
         <h1 class="mb-4">What My Clients Say!</h1>
         <div class="owl-carousel testimonial-carousel">
+          
+        {% for data in testimonies %}
           <div class="position-relative">
-            <i
-              class="fa fa-3x fa-facebook text-primary position-absolute"
-              style="top: -6px; right: 0"
-            ></i>
             <div class="d-flex align-items-center mb-3">
-              <!--                                <img class="img-fluid rounded-circle" src="{% static 'img/testimonial-1.jpg'%}" style="width: 60px; height: 60px;" alt="">-->
-              <div class="ml-3">
-                <h6 class="text-uppercase">Thomas Wellington</h6>
-                <span>Athlete</span>
-              </div>
-            </div>
-            <p class="m-0">
-              Rubby very professional, courteous and knowledgeable with
-              varieties of Skill Sets. One of the best I’ve encountered. Will be
-              back for his skill set.
-            </p>
-          </div>
-          <div class="position-relative">
-            <i
-              class="fa fa-3x fa-quote-right text-primary position-absolute"
-              style="top: -6px; right: 0"
-            ></i>
-            <div class="d-flex align-items-center mb-3">
+              <a href="{{data.url}}">
+
+                <img class="" src='media/images/{{data.social_network}}.png' alt="" style=" width:40px; height: 40px;">
+              </a>
               <!--                                <img class="img-fluid rounded-circle" src="{% static 'img/testimonial-2.jpg'%}" style="width: 60px; height: 60px;" alt="">-->
               <div class="ml-3">
-                <h6 class="text-uppercase">David Quackenbush</h6>
-                <span>Retired</span>
+                <a href="{{data.url}}">
+                <h6 class="text-uppercase">{{data.name}}</h6>
+                <span>{{data.social_media}}</span>
+              </a>
               </div>
             </div>
             <p class="m-0">
-              I am always incredibly satisfied with my specific massage
-              therapist Olivia. She checks in throughout, making sure everything
-              is good.
+              {{data.testimony}}
             </p>
           </div>
-          <div class="position-relative">
-            <i
-              class="fa fa-3x fa-quote-right text-primary position-absolute"
-              style="top: -6px; right: 0"
-            ></i>
-            <div class="d-flex align-items-center mb-3">
-              <!--                                <img class="img-fluid rounded-circle" src="{% static 'img/testimonial-3.jpg'%}" style="width: 60px; height: 60px;" alt="">-->
-              <div class="ml-3">
-                <h6 class="text-uppercase">Joe Biggs</h6>
-                <span>Construction Supervisor</span>
-              </div>
-            </div>
-            <p class="m-0">
-              Everything went great and everyone was super friendly
-            </p>
-          </div>
+          {% endfor %}
+          
         </div>
       </div>
     </div>

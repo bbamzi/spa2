@@ -1,0 +1,130 @@
+{% extends "base.html" %} {% block content %}
+{%load static %}
+<!-- Open Hours Start -->
+<form method="POST" id="tracking">
+  {% csrf_token %}
+
+  <div class="row justify-content-center bg-appointment mx-0">
+    <div class="col-lg-6 py-5">
+      <div class="p-5 my-5" style="background: rgba(33, 30, 28, 0.7)">
+        <div class="form-row">
+          <div class="col-sm-6">
+            <div class="form-group">
+              <input
+                type="text"
+                name="order_id"
+                class="form-control bg-transparent p-4 track_form"
+                placeholder="Your order Number"
+                required="required"
+                id="tracking_id"
+              />
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group">
+              <input
+                type="text"
+                name="tracking-email"
+                class="form-control bg-transparent p-4 track_form"
+                placeholder="Your Email"
+                required="required"
+                id="tracking-email"
+              />
+            </div>
+          </div>
+          <div class="col-sm-12 text-center html_track">
+            <input
+            class="btn btn-primary btn-block"
+            type="submit"
+            style="height: 47px"
+            id="track_order_btn"
+            value="Track My Order"
+          >
+          <div class="spinner-border mt-3 `mb-3 text-center" style="display:none; width: 3rem; height: 3rem;  animation-duration: 2s;" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+        
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+<!-- Open Hours End -->
+<script>
+const track_order_btn = document.getElementById('track_order_btn')
+const form = document.getElementById('tracking')
+const trackingEmail = document.getElementById('tracking-email')
+const track_form = document.querySelectorAll('.track_form')
+const tracking_id = document.getElementById('tracking_id')
+const spinnerBorder = document.querySelector('.spinner-border')
+const html_track = document.querySelector('.html_track')
+
+form.addEventListener('submit', (e)=>{
+e.preventDefault()
+
+
+track_form.forEach((ex)=>{
+        ex.disabled = true
+       
+    })
+    $.ajax({
+                method: "POST",
+                url: "/track-order",  
+                data: {
+                  "email":trackingEmail.value,
+                  "tracking_id": tracking_id.value,
+                  csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
+                },
+                success: function(res) {
+                  spinnerBorder.style.display = 'none';
+                  
+                  html = `
+                  <div class="text-left mt-4">
+
+<ul>
+  <li>
+    <p>Name-- ${res.name}</p> 
+    
+  </li>
+  <li>
+    <p>Order Status-- ${res.order_status}</p> 
+    
+  </li>
+  <li>
+    <p>Email -- ${res.email}</p> 
+  </li>
+  <li>
+    <p>Order Date-- ${res.date}</p> 
+  </li>
+  <li>
+    <p>Order Id-- ${res.order_id}</p> 
+  </li>
+  <li>
+    <p>Order Time-- ${res.name}</p> 
+  </li>
+  <li>
+    <p>Payment Method-- ${res.payment_method}</p> 
+  </li>
+  <li>
+    <p>Service Type -- ${res.service_type}</p> 
+  </li>
+  <li>
+    <p>Email -- ${res.email}</p> 
+  </li>
+  <li>
+    <p>Total -- ${res.total}</p> 
+  </li>   
+</ul>
+</div>
+                  `
+                  html_track.insertAdjacentHTML("beforeend",res.status_code==200?html:'<p class = "mt-3">Order Not Found</p>')
+                  console.log(res);
+                }
+            })
+})
+
+
+</script>
+
+{% endblock %}

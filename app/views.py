@@ -32,8 +32,9 @@ def id_gen() -> str:
     return int_to_base36(uuid.uuid4().int)[:ID_LENGTH]
 # Create your views here.
 def index(request):
+     testimonies = Testimonial.objects.all()
      lst_payments = PaymentDetail.objects.all()
-     return render(request, 'index.html',{"hello": "world","payment_types":lst_payments})
+     return render(request, 'index.html',{"hello": "world","payment_types":lst_payments,"testimonies": testimonies})
 
 def appointments(request):
      lst_payments = PaymentDetail.objects.all()
@@ -94,9 +95,7 @@ def updateReceipt(request):
           id = request.POST.get('order_id', None)
           order = Booking.objects.get(order_id=id)
           file = request.FILES.get('file')
-        
           extension = os.path.splitext(str(request.FILES.get('file')))[1]
-        
           fss = FileSystemStorage()
           filename = fss.save(f'{id}.{extension}', file)
           url = fss.url(filename)
@@ -107,10 +106,34 @@ def updateReceipt(request):
           return JsonResponse({"status":"success"})
 
 
-def opening(request):
+def track(request):
 
-     return render(request, 'opening.html',{"hello": "world"})
+     if request.method == 'POST':
+          id = request.POST.get('tracking_id', None)
+          email = request.POST.get('email', None)
+          try:
+               order = Booking.objects.get(order_id=id, email=email)
+               data= {
+                    "status_code":200,
+                    "order_id":order.order_id,
+                     "date":order.order_date,
+                     "name":order.name,
+                     "order_time":order.order_time,
+                     "payment_method":order.payment_method,
+                     "service_type":order.service_type,
+                     "email":order.email,
+                     "order_status":order.order_status,
+                     "client_address":order.client_address,
+                     "service":order.service,
+                     "total":order.total
+                     }
+               return JsonResponse(data)
+          except Exception as e:
+               print(e)
+               return JsonResponse({"status_code":404})
+
+     return render(request, 'track.html',{"hello": "world"})
 
 def testimonials(request):
-
-     return render(request, 'testimonial.html',{"hello": "world"})
+     testimonies = Testimonial.objects.all()
+     return render(request, 'testimonial.html',{"testimonies": testimonies})

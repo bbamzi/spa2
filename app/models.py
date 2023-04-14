@@ -27,6 +27,7 @@ class Booking(models.Model):
     durations =  models.CharField(max_length=100, blank=True, null=True)
     total =  models.CharField(max_length=100, blank=True, null=True)
     receipt =  models.ImageField(null = True, blank=True ,upload_to= "images/")
+    order_status =  models.CharField(max_length=100, blank=True, null=True)
 
 
 
@@ -51,6 +52,16 @@ class HostingAddress(models.Model):
     city = models.CharField(max_length=1000, blank=True)
     zip = models.CharField(max_length=1000, blank=True)
     state = models.CharField(max_length=1000, blank=True)
+    lat_lng = models.CharField(max_length=1000, blank=True)
+
+
+class Testimonial(models.Model):
+    name = models.CharField(max_length=200,blank=True,null=True)
+    social_username = models.CharField(max_length=200,blank=True,null=True)
+    social_network = models.CharField(max_length=200,blank=True,null=True)
+    testimony = models.CharField(max_length=200,blank=True,null=True)
+    ratings = models.IntegerField(blank=True,null=True)
+    url = models.URLField(blank=True,null=True)
    
         
 
