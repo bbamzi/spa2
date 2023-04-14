@@ -9,7 +9,12 @@
     <meta content="Free HTML Templates" name="description" />
 
     <!-- Favicon -->
-
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+    integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI="
+    crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
+     integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM="
+     crossorigin=""></script>
     <link href="{% static 'img/favicon.ico'%}" rel="icon" />
 
     <!-- Google Web Fonts -->
@@ -84,30 +89,13 @@
             <!-- <a href="{{url_for('pricing'%}" class="nav-item nav-link"
               >Pricing</a
             > -->
-            <div class="nav-item dropdown">
-              <a
-                href="#"
-                class="nav-link dropdown-toggle"
-                data-toggle="dropdown"
-                >Pages</a
-              >
-              <div class="dropdown-menu rounded-0 m-0">
-                <a href="{% url 'appointments' %}" class="dropdown-item"
-                  >Appointment</a
-                >
-                
-               
-                <a href="{% url 'testimonials' %}" class="dropdown-item"
-                  >Testimonial</a
-                >
-              </div>
-            </div>
+            
            
           </div>
           
         </div>
         <a
-            href="{% url 'appointments' %}"
+            href="{% url 'track-order' %}"
             class="btn btn-primary d-none d-lg-block"
             >Track My Order</a
           >
@@ -139,8 +127,7 @@
               highest level of care.
             </p>
             <p>
-              <i class="fa fa-map-marker-alt mr-2"></i>Hand & Stone Fort Worth,
-              TX 6323 Camp Bowie Blvd, Fort Worth, TX 76116
+              <i class="fa fa-map-marker-alt mr-2"></i>{{address.address}}
             </p>
            
             

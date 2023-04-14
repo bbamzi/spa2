@@ -11,6 +11,11 @@ def id_gen() -> str:
     """Generates random string whose length is `ID_LENGTH`"""
     return int_to_base36(uuid.uuid4().int)[:ID_LENGTH]
 
+society = ["Awaiting Payment","Payment Received","Order Completed"]
+
+status_choices = ((i, i) for i in society)
+
+
 class Booking(models.Model):
     order_id =  models.CharField(max_length=100, blank=True, null=True)
     order_date = models.DateField(auto_now_add=True)
@@ -27,7 +32,7 @@ class Booking(models.Model):
     durations =  models.CharField(max_length=100, blank=True, null=True)
     total =  models.CharField(max_length=100, blank=True, null=True)
     receipt =  models.ImageField(null = True, blank=True ,upload_to= "images/")
-    order_status =  models.CharField(max_length=100, blank=True, null=True)
+    order_status =  models.CharField(max_length=100, choices=status_choices, blank=True, null=True)
 
 
 
@@ -47,12 +52,13 @@ class PaymentDetail(models.Model):
 
 class HostingAddress(models.Model):
     address_nickname= models.CharField(max_length=1000, blank=True)
+    state = models.CharField(max_length=1000, blank=True)
     address = models.CharField(max_length=1000, blank=True)
-    state = models.CharField(max_length=1000, blank=True)
-    city = models.CharField(max_length=1000, blank=True)
-    zip = models.CharField(max_length=1000, blank=True)
-    state = models.CharField(max_length=1000, blank=True)
-    lat_lng = models.CharField(max_length=1000, blank=True)
+    lat = models.CharField(max_length=1000, blank=True)
+    lng= models.CharField(max_length=1000, blank=True)
+
+    def __str__(self) -> str:
+        return f'{self.address_nickname}'
 
 
 class Testimonial(models.Model):
@@ -62,6 +68,19 @@ class Testimonial(models.Model):
     testimony = models.CharField(max_length=200,blank=True,null=True)
     ratings = models.IntegerField(blank=True,null=True)
     url = models.URLField(blank=True,null=True)
+
+
+
+
    
+booking = HostingAddress.objects.all()
+state = [i.state for i in booking]
+state_choices = ((i, i) for i in state)
         
+
+class ActiveAddress(models.Model):
+    state =  models.CharField(max_length=100, choices=state_choices, blank=True, null=True)
+
+    def __str__(self) -> str:
+        return f'{self.state}'
 

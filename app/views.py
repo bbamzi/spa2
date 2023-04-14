@@ -31,14 +31,29 @@ def id_gen() -> str:
     """Generates random string whose length is `ID_LENGTH`"""
     return int_to_base36(uuid.uuid4().int)[:ID_LENGTH]
 # Create your views here.
+
+
 def index(request):
+     
+     try:
+          active_address = ActiveAddress.objects.all()[0]
+          address = HostingAddress.objects.get(state = active_address)
+     except Exception:
+          address = ""
      testimonies = Testimonial.objects.all()
      lst_payments = PaymentDetail.objects.all()
-     return render(request, 'index.html',{"hello": "world","payment_types":lst_payments,"testimonies": testimonies})
+     return render(request, 'index.html',{"hello": "world","payment_types":lst_payments,"testimonies": testimonies, "address":address})
+
+
+
 
 def appointments(request):
      lst_payments = PaymentDetail.objects.all()
-   
+     try:
+          active_address = ActiveAddress.objects.all().first
+          address = HostingAddress.objects.get(state = active_address)
+     except Exception:
+          address = ""
      gen_id  = id_gen()
      if request.method == 'POST':
 
@@ -63,6 +78,7 @@ def appointments(request):
           details = PaymentDetail.objects.get(payment_type = request.POST.get('payment_method', None))
           
           
+          
           # order_details = Booking.objects.get(order_id =gen_id )
           resp = {"order_id":gen_id,"payment_details":details.payment_value}
           html_message = render_to_string(
@@ -72,21 +88,22 @@ def appointments(request):
                      "payment":request.POST.get('payment_method', None),
                      "service_type":request.POST.get('service_type', None),
                      "email":request.POST.get('email',"None"),
-                     "order_status":"Awaiting_payment",
+                     "order_status":"Awaiting Payment",
                      "name":request.POST.get('name'),
                      "client_address":request.POST.get('address', None),
                      "service":request.POST.get('service', None),
                      "total":request.POST.get('total', None),
                      "details":details.payment_value
+                    
                      },
         )
           
-          # send_email(html_message,request.POST.get('email',"None"))
+          send_email(html_message,request.POST.get('email',"None"))
           return JsonResponse(resp)
          
 
      
-     return render(request, 'appointment.html',{"hello": "world", "order_id":gen_id,"payment_types":lst_payments})
+     return render(request, 'appointment.html',{"hello": "world", "order_id":gen_id,"payment_types":lst_payments, "address":address,})
 
 
 def updateReceipt(request):
@@ -107,7 +124,11 @@ def updateReceipt(request):
 
 
 def track(request):
-
+     try:
+          active_address = ActiveAddress.objects.all().first
+          address = HostingAddress.objects.get(state = active_address)
+     except Exception:
+          address = ""
      if request.method == 'POST':
           id = request.POST.get('tracking_id', None)
           email = request.POST.get('email', None)
@@ -132,8 +153,13 @@ def track(request):
                print(e)
                return JsonResponse({"status_code":404})
 
-     return render(request, 'track.html',{"hello": "world"})
+     return render(request, 'track.html',{"hello": "world", "address":address})
 
 def testimonials(request):
      testimonies = Testimonial.objects.all()
-     return render(request, 'testimonial.html',{"testimonies": testimonies})
+     try:
+          active_address = ActiveAddress.objects.all().first
+          address = HostingAddress.objects.get(state = active_address)
+     except Exception:
+          address = ""
+     return render(request, 'testimonial.html',{"testimonies": testimonies, "address":address,})

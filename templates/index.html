@@ -293,6 +293,7 @@
   
   {% include "appoint.html" %}
 </div>
+
 <!-- Service End -->
 
 <!-- Open Hours Start -->
@@ -340,8 +341,8 @@
 </div>
 <!-- Open Hours End -->
 <!-- Testimonial Start -->
-<div class="container-fluid py-5">
-  <div class="container py-5">
+<div class="container-fluid">
+  <div class="container py-2">
     <div class="row align-items-center">
       <div class="col-lg-6 pb-5 pb-lg-0">
         <img
@@ -385,6 +386,24 @@
     </div>
   </div>
 </div>
+<div class="container-fluid ">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-lg-6 pb-5 pb-lg-0">
+        <h2>Find us Here</h2>
+   
+<div id="map" style="height: 300px; width: 1000px;"></div>
+    </div></div></div></div>
 <!-- Testimonial End -->
-
+<script>
+  const view = ["{{address.lat}}".split(6)[0],"{{address.lng}}".split(6)[0]]
+  console.log(view);
+  
+  var map = L.map('map').setView(view, 13);
+  L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+}).addTo(map);
+var marker = L.marker(["{{address.lat}}", "{{address.lng}}"]).addTo(map);
+</script>
 {% endblock %}
