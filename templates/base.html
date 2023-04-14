@@ -81,7 +81,13 @@
           <div class="navbar-nav m-auto py-0">
             <a href="{% url  'index' %}" class="nav-item nav-link active"
               >Home</a
+
             >
+            <a
+            href="{% url 'track-order' %}"
+            class="nav-item nav-link active"
+            >Track My Order</a
+          >
             <!-- <a href="{{url_for('about'%}" class="nav-item nav-link">About</a>
             <a href="{{url_for('service'%}" class="nav-item nav-link"
               >Services</a
@@ -94,11 +100,7 @@
           </div>
           
         </div>
-        <a
-            href="{% url 'track-order' %}"
-            class="btn btn-primary d-none d-lg-block"
-            >Track My Order</a
-          >
+        
         
       </nav>
     </div>
