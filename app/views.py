@@ -38,7 +38,7 @@ def index(request):
      
      try:
           active_address = ActiveAddress.objects.all()[0]
-          address = HostingAddress.objects.get(state = active_address)
+          address = HostingAddress.objects.get(address_nickname = active_address)
      except Exception:
           address = ""
      testimonies = Testimonial.objects.all()
@@ -161,7 +161,7 @@ def cancel_order(request):
 def track(request):
      try:
           active_address = ActiveAddress.objects.all().first
-          address = HostingAddress.objects.get(state = active_address)
+          address = HostingAddress.objects.get(address_nickname = active_address)
      except Exception:
           address = ""
      if request.method == 'POST':
@@ -194,7 +194,7 @@ def testimonials(request):
      testimonies = Testimonial.objects.all()
      try:
           active_address = ActiveAddress.objects.all().first
-          address = HostingAddress.objects.get(state = active_address)
+          address = HostingAddress.objects.get(address_nickname = active_address)
      except Exception:
           address = ""
      return render(request, 'testimonial.html',{"testimonies": testimonies, "address":address,})
