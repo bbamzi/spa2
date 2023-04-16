@@ -73,13 +73,13 @@ class Testimonial(models.Model):
 
 
    
-booking = HostingAddress.objects.all()
-state = [i.state for i in booking]
-state_choices = ((i, i) for i in state)
+# booking = HostingAddress.objects.all()
+# state = [i.state for i in booking if booking]
+# state_choices = ((i, i) for i in state)
         
 
 class ActiveAddress(models.Model):
-    state =  models.CharField(max_length=100, choices=state_choices, blank=True, null=True)
+    address_nickname =  models.CharField(max_length=100,  blank=True, null=True)
 
     def __str__(self) -> str:
         return f'{self.state}'
