@@ -82,5 +82,5 @@ class ActiveAddress(models.Model):
     address_nickname =  models.CharField(max_length=100,  blank=True, null=True)
 
     def __str__(self) -> str:
-        return f'{self.state}'
+        return f'{self.address_nickname}'
 
