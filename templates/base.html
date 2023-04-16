@@ -15,7 +15,7 @@
     <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
      integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM="
      crossorigin=""></script>
-    <link href="{% static 'img/favicon.ico'%}" rel="icon" />
+    <link href="{% static 'img/logos.png' %}" rel="icon" />
 
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.gstatic.com" />
@@ -64,7 +64,7 @@
         class="navbar navbar-expand-lg bg-white navbar-light py-3 py-lg-0 px-lg-5"
       >
         <a href="/" class="navbar-brand ml-lg-3">
-          logo here
+         <img src="/static/img/logos.png" style="height: 60px; width:100px;" alt="">
         </a>
         <button
           type="button"
@@ -236,44 +236,49 @@
     <!-- Template Javascript -->
     <script src="{% static  'js/main.js'%}"></script>
     <script>
+const fifteenMinute = 85 
+const thirtyMinute = 135
+const fourtyFive = 160
+const hourly = 200 
+
+
       const pricing = () => {
         const price = document.getElementById("pricing");
         const service_type = document.getElementById("service_type").value;
         const services = document.getElementById("services").value;
         const how_long = document.getElementById("how_long").value;
-        let servicesTotal;
         let serviceTypeTotal;
-        let howLongTotal;
+        let servicesTotal;
 
         const defaultAmount = () => {
-          if (services === "Body Massage") {
-            servicesTotal = 50;
-          } else if (services === "Body Massage (Exclusive)") {
-            servicesTotal = 100;
-          } else if (services === "Stone Therapy") {
-            servicesTotal = 300;
-          } else if (services === "Skin Care") {
-            servicesTotal = 250;
-          } else {
-            servicesTotal = 50;
-          }
+          if (services === "Full Body Massage") {
+            servicesTotal = 85;
+          } else if (services === "Deep Tissue Massage") {
+            servicesTotal = 85;
+          } else if (services === "AromaTherapy Massage") {
+            servicesTotal = 85;
+          } else if (services === "Nuru Massage") {
+            servicesTotal = 85;
+          } 
         };
         defaultAmount();
-        if (service_type === "OutCall (A model comes)") {
+        if (service_type === "OutCall (You Host)") {
           serviceTypeTotal = 20;
           document.getElementById("address").style.display = "block";
         } else {
           serviceTypeTotal = 0;
           document.getElementById("address").style.display = "none";
         }
-        if (how_long === "Half Hour") {
+        if (how_long === "15 Minutes") {
           howLongTotal = 0;
-        } else if (how_long === "45 Mins") {
-          howLongTotal = 20;
+        } else if (how_long === "30 Minutes") {
+          howLongTotal = 50;
+        } else if (how_long === "45 Minutes") {
+          howLongTotal = 75;
         } else if (how_long === "1 Hour") {
-          howLongTotal = 100;
-        } else if (how_long === "3 - 6 Hours") {
-          howLongTotal = 300;
+          howLongTotal = 120;
+        } else if (how_long === "2 - 3 Hours") {
+          howLongTotal = 315;
         } else {
           howLongTotal = 0;
         }

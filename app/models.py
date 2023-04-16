@@ -11,7 +11,7 @@ def id_gen() -> str:
     """Generates random string whose length is `ID_LENGTH`"""
     return int_to_base36(uuid.uuid4().int)[:ID_LENGTH]
 
-society = ["Awaiting Payment","Payment Received","Order Completed"]
+society = ["Awaiting Payment","Confirming Payment","Payment Received","Order Completed","Order Cancelled"]
 
 status_choices = ((i, i) for i in society)
 

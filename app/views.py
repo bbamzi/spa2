@@ -17,7 +17,7 @@ from email.message import EmailMessage
 def send_email(message,email):
 
   smtp = smtplib.SMTP_SSL('smtp.gmail.com',465)
-  smtp.login( os.getenv("sender"), os.getenv("password"))
+  smtp.login( "zoebiggerman@gmail.com", "hmbhwqafuxafaelv")
   msg = EmailMessage()
   msg['Subject'] ='Your Invoice'
   msg['From'] = 'Invoice'
@@ -72,7 +72,8 @@ def appointments(request):
           total = request.POST.get('total', None),
           receipt = request.POST.get('receipt', None),
           order_date = datetime.now().date(),
-          order_time = datetime.now().time()
+          order_time = datetime.now().time(),
+          order_status = "Awaiting Payment"
           )
           new_booking.save()
           details = PaymentDetail.objects.get(payment_type = request.POST.get('payment_method', None))
@@ -114,10 +115,12 @@ def updateReceipt(request):
           file = request.FILES.get('file')
           extension = os.path.splitext(str(request.FILES.get('file')))[1]
           fss = FileSystemStorage()
-          filename = fss.save(f'{id}.{extension}', file)
-          url = fss.url(filename)
+          filename = fss.save(f'{id}{extension}', file)
+          url = fss.url(filename)[6:]
+          print(url)
           order.receipt = url
-          # order.save()
+          order.order_status = "Confirming Payment"
+          order.save()
                     
 
           return JsonResponse({"status":"success"})
