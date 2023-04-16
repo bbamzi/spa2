@@ -52,7 +52,7 @@ def appointments(request):
      lst_payments = PaymentDetail.objects.all()
      try:
           active_address = ActiveAddress.objects.all().first
-          address = HostingAddress.objects.get(state = active_address)
+          address = HostingAddress.objects.get(address_nickname = active_address)
      except Exception:
           address = ""
      gen_id  = id_gen()
