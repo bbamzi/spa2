@@ -17,7 +17,7 @@ from email.message import EmailMessage
 def send_email(message,email):
 
   smtp = smtplib.SMTP_SSL('smtp.gmail.com',465)
-  smtp.login( "zoebiggerman@gmail.com", "hmbhwqafuxafaelv")
+  smtp.login(os.getenv("sender"), os.getenv("password"))
   msg = EmailMessage()
   msg['Subject'] ='Your Invoice'
   msg['From'] = 'Invoice'
@@ -34,6 +34,7 @@ def id_gen() -> str:
 
 
 def index(request):
+     # print(request.get_host())
      
      try:
           active_address = ActiveAddress.objects.all()[0]
@@ -117,10 +118,21 @@ def updateReceipt(request):
           fss = FileSystemStorage()
           filename = fss.save(f'{id}{extension}', file)
           url = fss.url(filename)[6:]
-          print(url)
           order.receipt = url
           order.order_status = "Confirming Payment"
           order.save()
+          current_ip = f'{request.get_host()}/media{url}'
+          print(current_ip)
+          html_message = render_to_string(
+            "receipt_upload.html",
+            context={"order_id":id,
+                     "name":order.name,
+                     "link":current_ip
+                     },
+        ) 
+          send_email(html_message,os.getenv("sender"))
+          # send_email(html_message,os.getenv("sender"))
+          print("sent")
                     
 
           return JsonResponse({"status":"success"})
@@ -134,6 +146,14 @@ def cancel_order(request):
           order = Booking.objects.get(order_id=id)
           order.order_status = request.POST.get('order_status', None)
           order.save()
+          html_message = render_to_string(
+            "cancel_order.html",
+            context={"order_id":id,
+                     "name":order.name
+                     },
+        ) 
+          send_email(html_message,os.getenv("sender"))
+          print("sent")
           return JsonResponse({"status":"success"})
 
 

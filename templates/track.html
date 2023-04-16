@@ -51,13 +51,18 @@
           id="cancel_order_btn"
           value="Cancel My Order"
         >
-          <input
-          class="btn btn-primary btn-block "
-          type="button"
-          style="height: 47px"
-          id="recept_order_btn"
-          value="upload receipt"
-        >
+        <div class="mt-2">
+
+          <input style="display:none" type="file" id="my-file" onchange="loadImg(this)">
+              <button type="button" 
+              onclick="document.getElementById('my-file').click()"
+              class="btn btn-primary btn-block"
+              id="upload_btn"
+              >
+              Upload Receipt
+            </button>
+        </div>
+         
        
       
         </div>
@@ -143,7 +148,7 @@ document.getElementById('cancel_order_btn').addEventListener('click', ()=>{
             data.append("csrfmiddlewaretoken", "{{ csrf_token }}");
             data.append("order_status","Order Cancelled");
             data.append("order_id", tracking_id.value);
-        console.log(data);
+      
 $.ajax({
                 method: "POST",
                 url: "/cancel-order",
@@ -159,6 +164,45 @@ $.ajax({
             })
 })
 
+function loadImg(item) {
+
+const main = item.parentElement
+const file = main.querySelector("input[type=file]")["files"][0];
+const upload_btn = document.getElementById("upload_btn")
+
+// const image = document.querySelector(`.image`);
+const reader = new FileReader();
+let baseString;
+reader.onloadend = function () {
+  baseString = reader.result;
+ 
+  // image.src = baseString;
+ 
+  
+  upload_btn.style.display = "none"
+  // image.style.display = "block";
+
+};
+reader.readAsDataURL(file);
+var data = new FormData();
+            data.append("file", $("input[id^='my-file']")[0].files[0]);
+            data.append("csrfmiddlewaretoken", "{{ csrf_token }}");
+            data.append("order_id",tracking_id.value);
+          
+$.ajax({
+                method: "POST",
+                url: "/receipt-upload",
+                processData: false,
+                contentType: false,
+                mimeType: "multipart/form-data",
+                data: data,
+                success: function(res) {
+                    console.log(res)
+                    alert("Order updated")
+                    location.assign("/")
+                }
+            })
+}
 </script>
 
 {% endblock %}
