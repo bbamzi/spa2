@@ -124,6 +124,18 @@ def updateReceipt(request):
                     
 
           return JsonResponse({"status":"success"})
+     
+
+def cancel_order(request):
+
+
+     if request.method == "POST":
+          id = request.POST.get('order_id', None)
+          order = Booking.objects.get(order_id=id)
+          order.order_status = request.POST.get('order_status', None)
+          order.save()
+          return JsonResponse({"status":"success"})
+
 
 
 def track(request):

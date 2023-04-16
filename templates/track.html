@@ -43,6 +43,24 @@
           <div class="spinner-border mt-3 `mb-3 text-center" style="display:none; width: 3rem; height: 3rem;  animation-duration: 2s;" role="status">
             <span class="sr-only">Loading...</span>
         </div>
+        <div class="col-sm-12 text-center " id="Cancel" style="display: none;" >
+          <input
+          class="btn btn-primary btn-block "
+          type="button"
+          style="height: 47px"
+          id="cancel_order_btn"
+          value="Cancel My Order"
+        >
+          <input
+          class="btn btn-primary btn-block "
+          type="button"
+          style="height: 47px"
+          id="recept_order_btn"
+          value="upload receipt"
+        >
+       
+      
+        </div>
         
           </div>
         </div>
@@ -91,57 +109,23 @@ track_form.forEach((ex)=>{
     <p>Order Status-- ${res.order_status}</p> 
     
   </li>
-  <li>
-    <p>Email -- ${res.email}</p> 
-  </li>
-  <li>
-    <p>Order Date-- ${res.date}</p> 
-  </li>
-  <li>
-    <p>Order Id-- ${res.order_id}</p> 
-  </li>
-  <li>
-    <p>Order Time-- ${res.name}</p> 
-  </li>
-  <li>
-    <p>Payment Method-- ${res.payment_method}</p> 
-  </li>
-  <li>
-    <p>Service Type -- ${res.service_type}</p> 
-  </li>
-  <li>
-    <p>Email -- ${res.email}</p> 
-  </li>
-  <li>
-    <p>Total -- ${res.total}</p> 
-  </li>   
+  
 </ul>
 </div>
                   `
 
-                  const html2 = `<div class="col-sm-12 text-center html_track">
-            <input
-            class="btn btn-primary btn-block track_btn"
-            type="button"
-            style="height: 47px"
-            id="track_order_btn"
-            value="Cancel My Order"
-          >
-            <input
-            class="btn btn-primary btn-block track_btn"
-            type="button"
-            style="height: 47px"
-            id="track_order_btn"
-            value="upload receipt"
-          >
-         
-        
-          </div>`
+                
           if (res.status_code === 200) {
-
-            if (res.order_status !== "Order Cancelled" || res.order_status !== "Order Completed") {
+console.log(res.order_status);
+            if (res.order_status === "Awaiting Payment" || 
+            res.order_status === "Confirming Payment"||
+            res.order_status === "Payment Received") {
               html_track.insertAdjacentHTML("beforeend", `<p class = "mt-3">${res.order_status}</p>`)
-              html_track.insertAdjacentHTML("beforeend",html2)  
+              document.getElementById('Cancel').style.display = "block"
+             
+                    }
+                    else {
+                      html_track.insertAdjacentHTML("beforeend", `<p class = "mt-3">${res.order_status}</p>`)
                     }
           }
          
@@ -151,7 +135,29 @@ track_form.forEach((ex)=>{
             })
 })
 
-
+document.getElementById('cancel_order_btn').addEventListener('click', ()=>{
+  console.log(tracking_id.value);
+  document.getElementById('Cancel').style.display = "none"
+  var data = new FormData();
+            
+            data.append("csrfmiddlewaretoken", "{{ csrf_token }}");
+            data.append("order_status","Order Cancelled");
+            data.append("order_id", tracking_id.value);
+        console.log(data);
+$.ajax({
+                method: "POST",
+                url: "/cancel-order",
+                processData: false,
+                contentType: false,
+                
+                data: data,
+                success: function(res) {
+                    console.log(res)
+                    alert("Order cancelled")
+                    location.assign("/")
+                }
+            })
+})
 
 </script>
 
